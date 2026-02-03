@@ -1,5 +1,0 @@
-
-
-junior2:$2b$10$64.tgYBSTj5DWgOLoHZBZOAJP0RLg0t0VShCenEV4B1lLHey4h1gy
-
-{"config":{"webhook":"http://localhost:5000/webhook","waitQrCode":true,"proxy":null}}
