@@ -71,7 +71,7 @@ O bot responde automaticamente a mensagens recebidas via webhook, oferecendo inf
 
 Antes de começar, você vai precisar ter instalado em sua máquina:
 
-- [Node.js](https://nodejs.org/) (versão 16 ou superior)
+- [Node.js](https://nodejs.org/) (versão 22 ou superior)
 - [Python](https://www.python.org/) (versão 3.8 ou superior)
 - [Docker](https://www.docker.com/) (opcional, para execução em containers)
 - [Git](https://git-scm.com/) (para clonar o repositório)
