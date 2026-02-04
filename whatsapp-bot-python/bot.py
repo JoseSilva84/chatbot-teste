@@ -44,7 +44,7 @@ def enviar_mensagem(numero, texto):
 def processar_menu(numero, mensagem):
     msg = mensagem.strip().lower()
 
-    if msg in ["oi", "olá", "ola", "boa noite", "boa tarde", "bom dia", "menu"]:
+    if msg in ["", "oi", "olá", "ola", "boa noite", "boa tarde", "bom dia", "menu"]:
         enviar_mensagem(numero,
             "🤖 *Bem-vindo ao meu WhatsApp - Sou José Silva - Desenvolvedor Web\n\n"
             "Digite uma opção:\n"
