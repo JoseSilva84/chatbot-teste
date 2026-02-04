@@ -22,6 +22,9 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
+# ===== ESTADO DOS USUÁRIOS =====
+encerrados = {}  # Dicionário para rastrear usuários que encerraram a conversa
+
 
 # ===== ENVIAR MENSAGEM =====
 def enviar_mensagem(numero, texto):
@@ -46,7 +49,7 @@ def processar_menu(numero, mensagem):
 
     if msg in ["oi", "olá", "ola", "boa noite", "boa tarde", "bom dia", "menu"]:
         enviar_mensagem(numero,
-            "🤖 *Bem-vindo ao meu WhatsApp - Sou José Silva - Desenvolvedor Web\n\n"
+            "🙋🏻‍♂️ Bem-vindo ao meu WhatsApp - Sou José Silva - Desenvolvedor Web\n\n"
             "Digite uma opção:\n"
             "1️⃣ Falar comigo no pessoal\n"
             "2️⃣ Ver horário de trabalho\n"
@@ -55,7 +58,8 @@ def processar_menu(numero, mensagem):
         )
 
     elif msg == "1":
-        enviar_mensagem(numero, "🫸🏽 Pronto. Logo você será atendido por José Silva")
+        encerrados[numero] = True  # Marca o usuário como encerrado
+        enviar_mensagem(numero, "🫸🏽 Pronto. Logo será atendido por José Silva. Caso desejar retornar ao menu principal, é só digitar a palavra *menu*")
 
     elif msg == "2":
         enviar_mensagem(numero, "🕒 Nosso horário é das 08h às 17h.")
@@ -67,7 +71,7 @@ def processar_menu(numero, mensagem):
         enviar_mensagem(numero, "🏢 Full Stack Developer | ADS Especialista em desenvolvimento de ponta a ponta. Formado em Análise e Desenvolvimento de Sistemas, trabalho na construção de aplicações modernas e otimizadas. Apaixonado por resolver desafios através da tecnologia e entregar valor em cada linha de código.")
 
     else:
-        enviar_mensagem(numero, "❓ Opção inválida. Digite *menu*.")
+        enviar_mensagem(numero, "❓ Opção inválida.")
         enviar_mensagem(numero,
             "🤖 *Bem-vindo ao meu WhatsApp - Sou José Silva - Desenvolvedor Web\n\n"
             "Digite uma opção:\n"
@@ -92,6 +96,18 @@ def webhook():
         mensagem = data.get("body", "")
 
         print(f"💬 Mensagem de {numero}: {mensagem}")
+
+        # Permite reativar a conversa enviando "menu"
+        msg = mensagem.strip().lower()
+        if msg == "menu" and numero in encerrados:
+            del encerrados[numero]
+            print(f"🔄 Conversa reativada para {numero}")
+
+        # Verifica se a conversa está encerrada para este usuário
+        if numero in encerrados:
+            print(f"💬 Mensagem de {numero} ignorada (conversa encerrada): {mensagem}")
+            return jsonify({"status": "ok"}), 200
+
         processar_menu(numero, mensagem)
 
     else:
